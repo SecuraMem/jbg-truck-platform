@@ -5,6 +5,7 @@ import { TruckList } from './components/TruckList';
 import { LoadList } from './components/LoadList';
 import { ChatInterface } from './components/ChatInterface';
 import { TruckImport } from './components/TruckImport';
+import { Settings } from './components/Settings';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { initialTrucks } from './data/initialTrucks';
 import { initialLoads } from './data/initialLoads';
@@ -79,6 +80,13 @@ function App() {
     setTrucks(prev => [...prev, ...newTrucks]);
   }, [setTrucks]);
 
+  // Handle clear all data
+  const handleClearAllData = useCallback(() => {
+    setTrucks([]);
+    setLoads([]);
+    setChatHistory([]);
+  }, [setTrucks, setLoads, setChatHistory]);
+
   // Render current view
   const renderView = () => {
     switch (currentView) {
@@ -114,6 +122,14 @@ function App() {
           <TruckImport
             onImportTrucks={handleImportTrucks}
             existingTrucks={trucks}
+          />
+        );
+      case 'settings':
+        return (
+          <Settings
+            onClearAllData={handleClearAllData}
+            trucksCount={trucks.length}
+            loadsCount={loads.length}
           />
         );
       default:

@@ -6,7 +6,8 @@ import {
   MessageSquare,
   Upload,
   Menu,
-  X
+  X,
+  Settings
 } from 'lucide-react';
 
 interface LayoutProps {
@@ -24,6 +25,7 @@ export function Layout({ children, currentView, onViewChange }: LayoutProps) {
     { id: 'loads', label: 'Loads', icon: Package },
     { id: 'import', label: 'Import Trucks', icon: Upload },
     { id: 'chat', label: 'AI Assistant', icon: MessageSquare },
+    { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
   return (

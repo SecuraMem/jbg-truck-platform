@@ -12,7 +12,7 @@ import {
   Map
 } from 'lucide-react';
 import type { Load, LoadPriority, Truck as TruckType } from '../types';
-import { getRegion, getRegionInfo, groupByRegion, REGION_CONFIG, type JamaicaRegion } from '../utils/regions';
+import { getRegion, groupByRegion, REGION_CONFIG, type JamaicaRegion } from '../utils/regions';
 
 interface LoadListProps {
   loads: Load[];

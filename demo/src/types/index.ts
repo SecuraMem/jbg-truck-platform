@@ -64,10 +64,19 @@ export interface ScheduleConstraints {
   respectCapacity: boolean;
 }
 
+export interface Recommendation {
+  issue: string;
+  impact: string;
+  action: string;
+  priority: 'high' | 'medium' | 'low';
+  category: 'fairness' | 'efficiency' | 'risk' | 'cost';
+}
+
 export interface ScheduleGenerationResponse {
   assignments: Assignment[];
   fairnessScore: number;
   reasoning: string;
+  recommendations?: Recommendation[];
 }
 
 export interface ChatMessage {

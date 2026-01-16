@@ -8,14 +8,7 @@ import {
   CheckCircle,
   Zap
 } from 'lucide-react';
-
-export interface Recommendation {
-  issue: string;
-  impact: string;
-  action: string;
-  priority: 'high' | 'medium' | 'low';
-  category: 'fairness' | 'efficiency' | 'risk' | 'cost';
-}
+import type { Recommendation } from '../types';
 
 interface AIRecommendationsProps {
   recommendations: Recommendation[];

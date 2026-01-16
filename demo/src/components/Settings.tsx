@@ -70,8 +70,9 @@ export function Settings({ onClearAllData, trucksCount, loadsCount }: SettingsPr
 
         {!showConfirm ? (
           <button
+            type="button"
             onClick={() => setShowConfirm(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors cursor-pointer"
           >
             <Trash2 size={18} />
             Clear All Data
@@ -93,15 +94,17 @@ export function Settings({ onClearAllData, trucksCount, loadsCount }: SettingsPr
             </ul>
             <div className="flex gap-3">
               <button
+                type="button"
                 onClick={() => setShowConfirm(false)}
-                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
+                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleClearData}
                 disabled={isClearing}
-                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {isClearing ? (
                   <>

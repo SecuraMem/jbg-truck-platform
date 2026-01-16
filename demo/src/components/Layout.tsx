@@ -7,17 +7,21 @@ import {
   Upload,
   Menu,
   X,
-  Settings
+  Trash2
 } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
   currentView: string;
   onViewChange: (view: string) => void;
+  onClearAllData?: () => void;
+  trucksCount?: number;
+  loadsCount?: number;
 }
 
-export function Layout({ children, currentView, onViewChange }: LayoutProps) {
+export function Layout({ children, currentView, onViewChange, onClearAllData, trucksCount = 0, loadsCount = 0 }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -25,7 +29,6 @@ export function Layout({ children, currentView, onViewChange }: LayoutProps) {
     { id: 'loads', label: 'Loads', icon: Package },
     { id: 'import', label: 'Import Trucks', icon: Upload },
     { id: 'chat', label: 'AI Assistant', icon: MessageSquare },
-    { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
   return (
@@ -58,8 +61,8 @@ export function Layout({ children, currentView, onViewChange }: LayoutProps) {
           className={`
             fixed lg:static inset-y-0 left-0 z-40
             w-64 bg-white shadow-lg transform transition-transform duration-200
-            lg:transform-none
-            ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+            lg:transform-none lg:pointer-events-auto
+            ${sidebarOpen ? 'translate-x-0 pointer-events-auto' : '-translate-x-full pointer-events-none lg:translate-x-0'}
             pt-16 lg:pt-0
           `}
         >
@@ -90,12 +93,53 @@ export function Layout({ children, currentView, onViewChange }: LayoutProps) {
             })}
           </nav>
 
-          {/* Mission Statement */}
+          {/* Bottom Section - Clear Data */}
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
-            <div className="text-center text-sm text-gray-500">
-              <p className="font-medium text-jbg-primary">Fair Scheduling</p>
-              <p className="text-xs mt-1">Every driver deserves equal opportunity</p>
-            </div>
+            {onClearAllData && (
+              <>
+                {!showClearConfirm ? (
+                  <button
+                    type="button"
+                    onClick={() => setShowClearConfirm(true)}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <Trash2 size={18} />
+                    <span className="text-sm font-medium">Clear All Data</span>
+                  </button>
+                ) : (
+                  <div className="space-y-2">
+                    <p className="text-xs text-center text-red-600 font-medium">
+                      Delete {trucksCount} trucks & {loadsCount} loads?
+                    </p>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowClearConfirm(false)}
+                        className="flex-1 px-3 py-1.5 text-xs border border-gray-300 rounded-lg hover:bg-gray-50"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          onClearAllData();
+                          setShowClearConfirm(false);
+                        }}
+                        className="flex-1 px-3 py-1.5 text-xs bg-red-600 text-white rounded-lg hover:bg-red-700"
+                      >
+                        Confirm
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+            {!onClearAllData && (
+              <div className="text-center text-sm text-gray-500">
+                <p className="font-medium text-jbg-primary">Fair Scheduling</p>
+                <p className="text-xs mt-1">Every driver deserves equal opportunity</p>
+              </div>
+            )}
           </div>
         </aside>
 
@@ -108,7 +152,7 @@ export function Layout({ children, currentView, onViewChange }: LayoutProps) {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-6 min-h-[calc(100vh-64px)]">
+        <main className="flex-1 p-4 lg:p-6 min-h-[calc(100vh-64px)] relative z-10">
           {children}
         </main>
       </div>

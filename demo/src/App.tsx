@@ -5,7 +5,6 @@ import { TruckList } from './components/TruckList';
 import { LoadList } from './components/LoadList';
 import { ChatInterface } from './components/ChatInterface';
 import { TruckImport } from './components/TruckImport';
-import { Settings } from './components/Settings';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { initialTrucks } from './data/initialTrucks';
 import { initialLoads } from './data/initialLoads';
@@ -124,21 +123,19 @@ function App() {
             existingTrucks={trucks}
           />
         );
-      case 'settings':
-        return (
-          <Settings
-            onClearAllData={handleClearAllData}
-            trucksCount={trucks.length}
-            loadsCount={loads.length}
-          />
-        );
       default:
         return null;
     }
   };
 
   return (
-    <Layout currentView={currentView} onViewChange={setCurrentView}>
+    <Layout
+      currentView={currentView}
+      onViewChange={setCurrentView}
+      onClearAllData={handleClearAllData}
+      trucksCount={trucks.length}
+      loadsCount={loads.length}
+    >
       {renderView()}
     </Layout>
   );
